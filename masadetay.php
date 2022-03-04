@@ -1,5 +1,5 @@
 <?php include 'fonks\conn.php'; 
-    $masa= new sistem();
+    $table= new sistem();
 ?>
 
 <!DOCTYPE html>
@@ -16,9 +16,12 @@
 </style>
 <body>
 <?php 
-@$masaid=$_GET["tableId"];
 
-if($masaid!=""){
+$tableId = $_GET['tableId'];
+
+if($tableId!=""){
+
+
 
 ?>
 
@@ -28,7 +31,14 @@ if($masaid!=""){
         <div class="row border" style="min-height:700px">
             <div class="col-md-2 border-right border-grey">
                  <div class="row">
-                     <div class="col-md-12 border-bottom bg-info text-white" style="min-height: 100px;"></div>
+                     <div class="col-md-12 border-bottom bg-info text-white" style="min-height: 100px;">
+                        <?php 
+                        $query =$table->getTableName($conn,$tableId);
+                        $array = $query->fetch(PDO::FETCH_ASSOC);
+                        echo $array['tableName'];
+
+                    ?>
+                    </div>
                      <div class="col-md-12 border-bottom bg-light ">s</div>
                      <div class="col-md-12 border-bottom bg-light ">s</div>
                      <div class="col-md-12 border-bottom bg-light ">s</div>

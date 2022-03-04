@@ -9,22 +9,29 @@ try{
 }
 
 class sistem{
-    //tek fonksiyon ile gelecek sorguların parametreleri çekiliyor
-    private function sorgu($con,$stmt){
+    //tek fonksiyon ile gelecek sorguları hazır execute edilmesi
+    private function mainquery($con,$stmt){
         
         $b=$con->prepare($stmt);
         $b->execute();
         return $b;
     
     }
-
+    //parametreli sorguları çekmek için
+    private function mainparam1($con,$stmt,$p1){
+        
+        $b=$con->prepare($stmt);
+        $b->execute(array("$p1"));
+        return $b;
+    
+    }
     
     
     //veritabanındaki masaları fetch_assoc komutu ile yazdırıyoruz
-    public function catchmasa($conn){
+    public function fetchTable($conn){
         
         $stm ="select * from tblmasalar";
-        $b=$this->sorgu($conn,$stm);
+        $b=$this->mainquery($conn,$stm);
         while($da = $b->fetch(PDO::FETCH_ASSOC)){
 
             //pdo prepare parametre gerektirdiği için sorgu fonksiyonunu kullanamadım
@@ -44,14 +51,19 @@ class sistem{
 
     }
 
-    public function masarow($conn){
+    public function tablerow($conn){
         
         $stm ="select * from tblmasalar";
-        $b=$this->sorgu($conn,$stm); 
+        $b=$this->mainquery($conn,$stm); 
         echo count($b->fetchAll(PDO::FETCH_ASSOC));
 
     }
 
+    public function getTableName($conn,$p1){
+        
+        $get = "SELECT * from tblmasalar where id = ?";
+        return $this->mainparam1($conn,$get,$p1);
+    }
 
 }
 
