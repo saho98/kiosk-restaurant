@@ -65,8 +65,17 @@ class sistem{
         return $this->mainparam1($conn,$get,$p1);
     }
 
-}
+    public function getCategories($conn){
+        
+        $stmt = "SELECT * from tblcategory";
+        $func = $this->mainquery($conn,$stmt);
+        while($array = $func->fetch(PDO::FETCH_ASSOC)){
+            echo '<a class="btn btn-info m-1 text-white" sectionId="'.$array["cat_id"].'">'.$array["cat_name"].'</a>';
+        }
+    }
 
+}
+    
 
 
 
