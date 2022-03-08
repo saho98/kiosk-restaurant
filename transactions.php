@@ -20,26 +20,52 @@ switch ($transaction) {
         if($stmt->rowCount()==0) {
             echo "Henüz Sipariş Yok";
         }else{
-
+            echo '<table class="table-responsive"><table class="table">
+            <thead><tr>
+            <th scope="col">Ürün Adı</th>
+            <th scope="col">Adet</th>
+            <th scope="col">Tutar</th>
+            </tr></thead>
+            <tbody>';
             while($show=$stmt->fetch(PDO::FETCH_ASSOC)){
-                echo  '<div class="col-md-12 border-bottom bg-light ">'.$show['urunId'].'</div>';
+                $tutar = $show['adet'] * $show['urunFiyat'];
+                echo  '<tr>
+                <td>'.$show['urunAd'].'</td>
+                <td>'.$show['adet'].'</td>
+                <td>'.$tutar.'₺'.'</td>
+                </tr>';
             }
+            echo '</table></table>';
         }
         
 
         break;
     
     case "add" :
-        $tableId=$_POST["tableId"];
-        $prodId=$_POST["prodId"];
-        $quantity=$_POST["quantity"];
 
-        
-        $stmt=$conn->prepare("INSERT into tblanlıksiparis (tableId,urunId,urunAd,urunFiyat,adet) values (?,?,?,?,?)");
-        $stmt->execute(array($tableId,$prodId,'cacık',20,$quantity));
-        
+        if($_POST){
+        @$tableId=htmlspecialchars($_POST["tableId"]);
+        @$prodId=htmlspecialchars($_POST["prodId"]);
+        @$quantity=htmlspecialchars($_POST["quantity"]);
+            if($tableId=="" || $prodId=="" || $quantity==""){        
+                    echo "Eksik veri girişi";
+            }else{
+        $stmt=$conn->prepare("SELECT urunName,urunFiyat from tblurunler where urunId=?");
+        $stmt->execute(array($prodId));
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $urunName = $result['urunName'];
+        $urunFiyat = $result['urunFiyat']; 
+        $stmt2=$conn->prepare("INSERT into tblanlıksiparis (tableId,urunId,urunAd,urunFiyat,adet) values (?,?,?,?,?)");
+        $stmt2->execute(array($tableId,$prodId,$urunName,$urunFiyat,$quantity));
+        echo "Ekleme Yapıldı.";
+        }   
+        }else{
+        echo "Hata Var.";
+         }   
 
         break;
+        
+            
         
     case "prod" :
         $id=$_GET["id"];
@@ -50,15 +76,15 @@ switch ($transaction) {
         }else
         
         while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            echo '<label class="btn btn-secondary m-2"><input type="radio" name="prodId" value="'.$result["urunId"].'">'.$result["urunName"].': '.'<strong>'.$result["urunFiyat"].'</strong>'.'₺'.'</label>';
+        }    
+        break;    
             
-            echo "Ürün Adı: ".$result["urunName"]."<br>";
-            echo "Fiyatı: ".$result["urunFiyat"]."<br>";
-        }
-
-
-        break;
-    
-
+           
 }
 
 ?>
+
+        
+    
+

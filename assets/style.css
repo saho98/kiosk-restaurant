@@ -1,0 +1,26 @@
+#rows {
+    height: 30px;
+}
+
+#masalar {
+    height: 100px;
+    margin: 1vh;
+
+    border-radius: 10px;
+    font-size: 40px;
+
+}
+
+#masa a:link,
+#masa a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+#tableName{
+    min-height: 100px;
+}
+
+#middlePanel{
+    background-color:#F9F9F9
+}

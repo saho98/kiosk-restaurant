@@ -11,27 +11,9 @@ $sistem = new sistem();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restorant Sipariş Sistemi</title>
     <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
-<style>
-    #rows {
-        height: 30px;
-    }
 
-    #masalar {
-        height: 100px;
-        margin: 1vh;
-
-        border-radius: 10px;
-        font-size: 40px;
-
-    }
-
-    #masa a:link,
-    #masa a:visited {
-        text-decoration: none;
-        color: white;
-    }
-</style>
 
 <body>
     <div class="container-fluid">
