@@ -43,7 +43,7 @@ class sistem{
             $count = $stm->rowCount();
             if($count==0){$renk = "danger";}else{$renk = "success";}
             
-            //çekilecek her tablo için bu html kodları gelicek.    
+            //çekilecek her masa için bu html kodları gelicek.    
             echo '<div class="col-md-2 col-sm-3 border ml-5  bg-'.$renk.' text-center text-white" id="masalar">
             <div class="mx-auto p-2 text-center text-white"  id="masa" ><a href="masadetay.php?tableId='.$da["id"].'">'.$da["tableName"].'</a></div></div>';
 
@@ -58,6 +58,15 @@ class sistem{
         echo count($b->fetchAll(PDO::FETCH_ASSOC));
 
     }
+    public function orderrow($conn){
+        
+        $stm ="select * from tblanlıksiparis";
+        $b=$this->mainquery($conn,$stm); 
+        echo count($b->fetchAll(PDO::FETCH_ASSOC));
+
+    }
+
+
 
     public function getTableName($conn,$p1){
         
